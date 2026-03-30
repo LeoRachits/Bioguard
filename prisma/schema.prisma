@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           Int          @id @default(autoincrement())
+  nome         String
+  email        String       @unique
+  senha        String
+  tipo_usuario String       // 'ADMIN', 'COLABORADOR', 'INSTITUICAO'
+  occurrences  Occurrence[]
+  createdAt    DateTime     @default(now())
+}
+
+model Institution {
+  id               Int          @id @default(autoincrement())
+  nome             String
+  tipo             String       // 'ONG', 'CCZ', 'ABRIGO'
+  responsavel      String?      
+  local            String
+  telefone         String       
+  status_validacao Boolean      @default(false)
+  occurrences      Occurrence[]
+}
+
+model Occurrence {
+  id              Int          @id @default(autoincrement())
+  animal          String       
+  porte           String
+  localizacao     String       
+  estado_aparente String
+  foto_url        String?
+  latitude        Float?
+  longitude       Float?
+  status          String       @default("pendente") 
+  
+  userId         Int
+  user           User         @relation(fields: [userId], references: [id])
+  
+  institutionId  Int?
+  institution    Institution? @relation(fields: [institutionId], references: [id])
+  
+  createdAt      DateTime     @default(now())
+}

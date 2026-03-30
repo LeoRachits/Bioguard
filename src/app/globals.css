@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+:root {
+  --cialne-blue: #004A8D;
+  --cialne-yellow: #FFD100;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+}
