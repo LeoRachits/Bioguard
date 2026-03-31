@@ -66,7 +66,7 @@ O BioGuard adota o padrão **MVC adaptado ao Next.js (App Router)**:
 
 ```bash
 # 1. Clonar o repositório
-git clone https://github.com/seu-usuario/bioguard.git
+git clone https://github.com/SidneyJesusDev/bioguard.git
 cd bioguard
 
 # 2. Instalar dependências
