@@ -1,81 +1,166 @@
-🐾 BioGuard — Sistema de Gestão de Fauna e Resgate Animal
-O BioGuard é uma plataforma Full Stack desenvolvida para a Cialne com o objetivo de monitorar e gerenciar ocorrências de animais (fauna silvestre ou domésticos) encontrados nas unidades da empresa. O sistema conecta colaboradores de campo a instituições de resgate (ONGs, Clínicas e CCZ) de forma ágil e segura.
+# 🐾 BioGuard — Sistema de Gestão de Fauna e Resgate Animal
 
-🚀 Funcionalidades Principais
+**BioGuard** é uma plataforma Full Stack desenvolvida para a **Cialne** (empresa de avicultura, Fortaleza/CE) com o objetivo de monitorar e gerenciar ocorrências de animais (fauna silvestre ou domésticos) encontrados nas unidades da empresa. O sistema conecta colaboradores de campo a instituições de resgate (ONGs, CCZs e Abrigos) de forma ágil e rastreável.
 
-🔐 Autenticação Segura: Sistema de login com cookies e proteção de rotas via Middleware.
-📊 Dashboard Inteligente: Painel com estatísticas em tempo real e gráficos de distribuição por espécie (Recharts).
-📝 Registro de Ocorrências: Formulário com captura de GPS, fotos e descrição do estado do animal.
-🔔 Notificações em Tempo Real: Sino de alertas que notifica novos registros e permite acesso direto ao caso.
-📂 Diretório de Instituições: Busca filtrada de parceiros com botão de contato direto via WhatsApp.
-👤 Perfil do Guardião: Estatísticas individuais de cada colaborador e gestão de conta.
-📱 Interface Responsiva: Totalmente adaptado para uso em smartphones por colaboradores em campo.
+> **Parceiro:** Cialne — Av. Presidente Costa e Silva, 2067, Fortaleza/CE  
+> **Responsável:** Emanuel Carneiro | Gerente de TI | (85) 99147-6677  
+> **ODS:** ODS 11 — Cidades e Comunidades Sustentáveis  
+> **Versão:** v1.0.4 — Em operação local  
+
+---
+
+## 🚀 Funcionalidades Principais
+
+- 🔐 **Autenticação Segura:** Login com cookie de sessão e proteção de rotas via Middleware
+- 📊 **Dashboard Inteligente:** Painel com estatísticas em tempo real e gráficos de espécies (Recharts)
+- 📝 **Registro de Ocorrências:** Formulário com captura de GPS, foto e descrição do animal
+- 🗺️ **Mapa de Ocorrências:** Visualização geográfica dos registros via Leaflet
+- 📂 **Diretório de Instituições:** Busca de parceiros com contato direto via WhatsApp
+- 👤 **Perfil do Guardião:** Estatísticas individuais de cada colaborador
+- 📱 **Interface Responsiva:** Adaptada para uso em smartphones em campo
+
+---
+
+## 🏗️ Visão Geral da Arquitetura
+
+O BioGuard adota o padrão **MVC adaptado ao Next.js (App Router)**:
+
+```
+┌─────────────────────────────────────────────┐
+│              CLIENTES                        │
+│   Navegador Web / Smartphone (Mobile-First) │
+└──────────────┬──────────────────────────────┘
+               │ HTTP / Cookie de Sessão
+┌──────────────▼──────────────────────────────┐
+│           NEXT.JS (App Router)               │
+│  ┌──────────────┐   ┌─────────────────────┐ │
+│  │  React Pages │   │   API Routes        │ │
+│  │  (View/UI)   │   │   (Controller)      │ │
+│  └──────────────┘   └──────────┬──────────┘ │
+└─────────────────────────────────┼────────────┘
+                                  │ Prisma ORM
+┌─────────────────────────────────▼────────────┐
+│              PostgreSQL                       │
+│   Tabelas: User, Institution, Occurrence     │
+└──────────────────────────────────────────────┘
+```
+
+**Camadas:**
+- **View:** Componentes React com Tailwind CSS e Recharts
+- **Controller:** API Routes do Next.js (pasta `src/app/api/`)
+- **Model:** Prisma ORM com schema tipado (`prisma/schema.prisma`)
+- **Dados:** PostgreSQL hospedado localmente
+
+> Ver diagrama completo em [`docs/architecture/architecture.md`](docs/architecture/architecture.md)
+
+---
+
+## 🔧 Como Executar o Projeto
+
+### Pré-requisitos
+- Node.js 18+
+- PostgreSQL rodando localmente
+- npm ou yarn
+
+### Instalação
+
+```bash
+# 1. Clonar o repositório
+git clone https://github.com/seu-usuario/bioguard.git
+cd bioguard
+
+# 2. Instalar dependências
+npm install
+
+# 3. Configurar variáveis de ambiente
+cp .env.example .env
+# Edite o .env com sua DATABASE_URL
+
+# 4. Executar migrations e seed
+npx prisma migrate deploy
+npx prisma db seed
+
+# 5. Iniciar o servidor de desenvolvimento
+npm run dev
+```
+
+Acesse: [http://localhost:3000](http://localhost:3000)  
+Login padrão: `admin@cialne.com.br` / `123`
+
+---
+
+## 📚 Documentação Técnica Completa
+
+| Documento | Caminho |
+|-----------|---------|
+| Requisitos Funcionais e Não-Funcionais | [`docs/requirements/requirements.md`](docs/requirements/requirements.md) |
+| Arquitetura e Decisões Técnicas | [`docs/architecture/architecture.md`](docs/architecture/architecture.md) |
+| Modelo de Banco de Dados | [`docs/database/database_model.md`](docs/database/database_model.md) |
+| Especificação das APIs | [`docs/api/api_specification.md`](docs/api/api_specification.md) |
+
+---
+
+## 🛠️ Tecnologias e Ferramentas
+
+| Camada | Tecnologia | Versão |
+|--------|-----------|--------|
+| Framework Full Stack | Next.js (App Router) | 16.2.1 |
+| Linguagem | JavaScript / TypeScript | ES6+ |
+| Estilização | Tailwind CSS | 4.x |
+| Gráficos | Recharts | 3.8.x |
+| Mapa | Leaflet + React-Leaflet | 1.9.x |
+| Ícones | Lucide React | 1.0.x |
+| ORM | Prisma | 7.5.x |
+| Banco de Dados | PostgreSQL | 15+ |
+| Runtime | Node.js | 18+ |
+| Versionamento | Git + GitHub | — |
+
+---
+
+## 📅 Cronograma — Etapa 2 (N708)
+
+A Etapa 2 contempla o desenvolvimento completo e a integração de todas as funcionalidades planejadas. Prazo total: **14 semanas**.
+
+| Fase | Semanas | Atividades | Entregável |
+|------|---------|------------|------------|
+| Fase 1 | Sem. 1–2 | Refatoração do ambiente, Docker, autenticação JWT real por perfil | Ambiente dockerizado, auth completa |
+| Fase 2 | Sem. 2–3 | Implementação dos perfis de acesso (Colaborador, Gestor, ONG, Admin) com middleware | Controle de acesso por perfil funcional |
+| Fase 3 | Sem. 3–5 | API completa de ocorrências com upload de foto e validações | Endpoints /ocorrencias completos com testes |
+| Fase 4 | Sem. 5–6 | App Mobile (React Native) para registro em campo com GPS e câmera | App mobile funcional |
+| Fase 5 | Sem. 6–8 | Acionamento automático de ONGs, notificações push (FCM) | Sistema de notificações funcional |
+| Fase 6 | Sem. 8–9 | Chat em tempo real (WebSocket) entre colaborador e ONG | Chat funcional dentro da ocorrência |
+| Fase 7 | Sem. 9–11 | Painéis Web completos: Gestor, Admin Master, ONG | Interfaces integradas à API |
+| Fase 8 | Sem. 11–12 | Exportação de relatórios PDF/CSV com filtros | Relatórios mensais exportáveis |
+| Fase 9 | Sem. 12–13 | Testes unitários (Jest), integração (Supertest) e E2E (Cypress) | Cobertura de testes > 70% |
+| Fase 10 | Sem. 13–14 | Deploy em produção, CI/CD, ajustes com a Cialne e documentação final | Sistema em produção entregue à Cialne |
+
+---
+
+## 🌍 Relação com o ODS 11
+
+O BioGuard contribui diretamente com o **ODS 11 — Cidades e Comunidades Sustentáveis** da Agenda 2030 da ONU:
+
+- **Meta 11.6:** Reduzir o impacto ambiental negativo per capita das cidades — animais encontrados em ambiente industrial são encaminhados corretamente, sem soltura irregular
+- **Meta 11.b:** Fomentar políticas integradas de gestão de risco — o sistema cria um protocolo rastreável entre empresa, ONGs e órgãos públicos (CCZ)
+- **Responsabilidade Social Corporativa:** Relatórios exportáveis permitem à Cialne evidenciar suas ações ambientais à diretoria e a órgãos reguladores
+
+---
+
+## 🤝 Evidências da Prática Extensionista
+
+**Reunião presencial com o parceiro:**
+- **Data:** 15 de março de 2026
+- **Local:** Cialne — Av. Presidente Costa e Silva, 2067, Fortaleza/CE
+- **Participantes:** Sidney de Jesus F. de Freitas, Leandro G. Nascimento (equipe UNIFOR) + Emanuel Carneiro, Gerente de TI (Cialne)
+- **Pauta:** Levantamento de requisitos, identificação do problema de animais errantes nas dependências e validação da proposta do BioGuard
+- **Resultado:** Necessidades mapeadas, escopo validado, termo de parceria firmado
+
+> Foto da reunião disponível em [`docs/assets/reuniao_cialne_15032026.jpg`](docs/assets/reuniao_cialne_15032026.jpg)
+
+---
+
+## 👥 Autores
 
 
-🔧 Como Executar o Projeto
-
-Clonar o repositório:
-
-bashgit clone https://github.com/seu-usuario/bioguard.git
-
-📚 Documentação Técnica
-
-1. Requisitos Funcionais (RF) e Não-Funcionais (RNF)
-Requisitos Funcionais:
-
-RF01 (Login): O sistema autentica usuários corporativos.
-RF02 (Registro): O sistema permite registrar ocorrências com coordenadas geográficas.
-RF03 (Diretório): O sistema lista instituições parceiras filtradas por tipo.
-
-Requisitos Não-Funcionais:
-
-RNF01 (Segurança): As rotas internas são protegidas por Middleware, utilizando sessão via HTTP-Only Cookies.
-RNF02 (Responsividade): A interface segue o padrão Mobile-First para uso em smartphones de campo.
-
-
-2. Arquitetura do Sistema
-
-Padrão: MVC (Model-View-Controller) adaptado ao Next.js.
-Client-Side: React com hooks (useState, useEffect) para interatividade.
-Server-Side: API Routes do Next.js responsáveis pela lógica de negócio e segurança.
-Camada de Dados: Prisma ORM como ponte entre o código e o banco de dados PostgreSQL.
-
-
-3. Modelo de Banco de Dados (Diagrama ER)
-O diagrama pode ser elaborado no Lucidchart ou dbdiagram.io com as seguintes entidades:
-
-User: id, nome, email, senha, tipo_usuario
-Institution: id, nome, tipo, responsavel, local, telefone, status_validacao
-Occurrence: id, animal, porte, localizacao, latitude, longitude, estado_aparente, status, userId (FK), institutionId (FK)
-
-
-4. Protótipos de Interface
-As capturas de tela obtidas durante o desenvolvimento ilustram as telas do sistema. A paleta de cores adotada é composta pelo Azul Cialne (#004A8D) e Amarelo (#FFD100). A interface utiliza componentes reutilizáveis como StatusBadge e InstitutionCard.
-O projeto adotou a metodologia de Prototipagem Evolutiva, na qual o protótipo de alta fidelidade foi construído diretamente em código (CSS/Tailwind), eliminando etapas intermediárias e otimizando o tempo de desenvolvimento.
-
-5. Documentação de APIs
-MétodoEndpointDescriçãoPOST/api/loginAutentica o usuário e gera o cookie de sessão.GET/api/ocorrenciasLista todas as ocorrências para o Dashboard.POST/api/ocorrenciasCria um novo registro via mobile.PATCH/api/ocorrencias/[id]Atualiza o status da ocorrência (Pendente/Concluído).
-
-6. Tecnologias e Ferramentas
-
-Linguagem: JavaScript (ES6+)
-Frontend: Next.js (App Router), Tailwind CSS, Recharts, Lucide React
-Backend: Next.js API Routes
-Banco de Dados: PostgreSQL
-ORM: Prisma
-Ambiente de Desenvolvimento: VS Code, Git e GitHub
-
-
-7. Estrutura de Testes
-
-Testes de Unidade: Validam se o cálculo de estatísticas do gráfico está correto.
-Testes de Integração: Verificam se o registro de ocorrência é salvo corretamente no banco de dados.
-Testes de Usabilidade: Simulam o uso em campo com captura real de GPS no celular.
-
-Autores:
- Leandro Gonçakves Nascimento - matricula 2326350, 
- Sidney Jesus felix de Freitas - matricula 2323783
-
-Responsabilidades:
-Leandro: back-end, integração
-Sidney, Front-end, API
+| Leandro Gonçalves Nascimento | 2326350 | Back-end, integração com banco de dados, Prisma ORM, API Routes |
+| Sidney de Jesus Felix de Freitas | 2323783 | Front-end, componentes React, design de interface, API de stats |
