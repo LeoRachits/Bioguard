@@ -155,7 +155,7 @@ O BioGuard contribui diretamente com o **ODS 11 — Cidades e Comunidades Susten
 - **Pauta:** Levantamento de requisitos, identificação do problema de animais errantes nas dependências e validação da proposta do BioGuard
 - **Resultado:** Necessidades mapeadas, escopo validado, termo de parceria firmado
 
-> Foto da reunião disponível em [`docs/assets/reuniao_cialne_15032026.jpg`](docs/assets/reuniao_cialne_15032026.jpg)
+![Reunião com Emanuel Carneiro na Cialne](docs/assets/reunião%201.jpg)
 
 ---
 
