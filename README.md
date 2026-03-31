@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🐾 BioGuard — Sistema de Gestão de Fauna e Resgate Animal
+O BioGuard é uma plataforma Full Stack desenvolvida para a Cialne com o objetivo de monitorar e gerenciar ocorrências de animais (fauna silvestre ou domésticos) encontrados nas unidades da empresa. O sistema conecta colaboradores de campo a instituições de resgate (ONGs, Clínicas e CCZ) de forma ágil e segura.
 
-## Getting Started
+🚀 Funcionalidades Principais
 
-First, run the development server:
+🔐 Autenticação Segura: Sistema de login com cookies e proteção de rotas via Middleware.
+📊 Dashboard Inteligente: Painel com estatísticas em tempo real e gráficos de distribuição por espécie (Recharts).
+📝 Registro de Ocorrências: Formulário com captura de GPS, fotos e descrição do estado do animal.
+🔔 Notificações em Tempo Real: Sino de alertas que notifica novos registros e permite acesso direto ao caso.
+📂 Diretório de Instituições: Busca filtrada de parceiros com botão de contato direto via WhatsApp.
+👤 Perfil do Guardião: Estatísticas individuais de cada colaborador e gestão de conta.
+📱 Interface Responsiva: Totalmente adaptado para uso em smartphones por colaboradores em campo.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🔧 Como Executar o Projeto
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Clonar o repositório:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+bashgit clone https://github.com/seu-usuario/bioguard.git
 
-## Learn More
+📚 Documentação Técnica
 
-To learn more about Next.js, take a look at the following resources:
+1. Requisitos Funcionais (RF) e Não-Funcionais (RNF)
+Requisitos Funcionais:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+RF01 (Login): O sistema autentica usuários corporativos.
+RF02 (Registro): O sistema permite registrar ocorrências com coordenadas geográficas.
+RF03 (Diretório): O sistema lista instituições parceiras filtradas por tipo.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Requisitos Não-Funcionais:
 
-## Deploy on Vercel
+RNF01 (Segurança): As rotas internas são protegidas por Middleware, utilizando sessão via HTTP-Only Cookies.
+RNF02 (Responsividade): A interface segue o padrão Mobile-First para uso em smartphones de campo.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Arquitetura do Sistema
+
+Padrão: MVC (Model-View-Controller) adaptado ao Next.js.
+Client-Side: React com hooks (useState, useEffect) para interatividade.
+Server-Side: API Routes do Next.js responsáveis pela lógica de negócio e segurança.
+Camada de Dados: Prisma ORM como ponte entre o código e o banco de dados PostgreSQL.
+
+
+3. Modelo de Banco de Dados (Diagrama ER)
+O diagrama pode ser elaborado no Lucidchart ou dbdiagram.io com as seguintes entidades:
+
+User: id, nome, email, senha, tipo_usuario
+Institution: id, nome, tipo, responsavel, local, telefone, status_validacao
+Occurrence: id, animal, porte, localizacao, latitude, longitude, estado_aparente, status, userId (FK), institutionId (FK)
+
+
+4. Protótipos de Interface
+As capturas de tela obtidas durante o desenvolvimento ilustram as telas do sistema. A paleta de cores adotada é composta pelo Azul Cialne (#004A8D) e Amarelo (#FFD100). A interface utiliza componentes reutilizáveis como StatusBadge e InstitutionCard.
+O projeto adotou a metodologia de Prototipagem Evolutiva, na qual o protótipo de alta fidelidade foi construído diretamente em código (CSS/Tailwind), eliminando etapas intermediárias e otimizando o tempo de desenvolvimento.
+
+5. Documentação de APIs
+MétodoEndpointDescriçãoPOST/api/loginAutentica o usuário e gera o cookie de sessão.GET/api/ocorrenciasLista todas as ocorrências para o Dashboard.POST/api/ocorrenciasCria um novo registro via mobile.PATCH/api/ocorrencias/[id]Atualiza o status da ocorrência (Pendente/Concluído).
+
+6. Tecnologias e Ferramentas
+
+Linguagem: JavaScript (ES6+)
+Frontend: Next.js (App Router), Tailwind CSS, Recharts, Lucide React
+Backend: Next.js API Routes
+Banco de Dados: PostgreSQL
+ORM: Prisma
+Ambiente de Desenvolvimento: VS Code, Git e GitHub
+
+
+7. Estrutura de Testes
+
+Testes de Unidade: Validam se o cálculo de estatísticas do gráfico está correto.
+Testes de Integração: Verificam se o registro de ocorrência é salvo corretamente no banco de dados.
+Testes de Usabilidade: Simulam o uso em campo com captura real de GPS no celular.
+
+Autores:
+ Leandro Gonçakves Nascimento - matricula 2326350, 
+ Sidney Jesus felix de Freitas - matricula 2323783
+
+Responsabilidades:
+Leandro: back-end, integração
+Sidney, Front-end, API
