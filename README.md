@@ -155,7 +155,7 @@ O BioGuard contribui diretamente com o **ODS 11 — Cidades e Comunidades Susten
 - **Pauta:** Levantamento de requisitos, identificação do problema de animais errantes nas dependências e validação da proposta do BioGuard
 - **Resultado:** Necessidades mapeadas, escopo validado, termo de parceria firmado
 
-![Reunião com Emanuel Carneiro na Cialne](docs/assets/reunião%201.jpg)
+![Reunião com Emanuel Carneiro na Cialne](docs/assets/reunião1.jpg)
 
 ---
 
