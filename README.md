@@ -164,3 +164,5 @@ O BioGuard contribui diretamente com o **ODS 11 — Cidades e Comunidades Susten
 
 | Leandro Gonçalves Nascimento | 2326350 | Back-end, integração com banco de dados, Prisma ORM, API Routes |
 | Sidney de Jesus Felix de Freitas | 2323783 | Front-end, componentes React, design de interface, API de stats |
+
+
