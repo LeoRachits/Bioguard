@@ -1,20 +1,10 @@
-import 'dotenv/config';
+﻿import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-import pg from 'pg';
 
-const pool = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+const prisma = new PrismaClient();
 
-const adapter = new PrismaPg(pool);
-
-const prisma = new PrismaClient({
-  adapter,
-});
 async function main() {
-  console.log('🌱 Iniciando sementeira de dados...');
-
+  console.log('Iniciando seed...');
   await prisma.user.upsert({
     where: { email: 'admin@cialne.com.br' },
     update: {},
@@ -25,36 +15,16 @@ async function main() {
       tipo_usuario: 'ADMIN',
     },
   });
-
   await prisma.institution.createMany({
+    skipDuplicates: true,
     data: [
-      {
-        nome: 'ONG Patinhas Felizes',
-        tipo: 'ONG',
-        responsavel: 'Ana Maria',
-        local: 'Fortaleza - CE',
-        telefone: '(85) 98888-8888',
-        status_validacao: true,
-      },
-      {
-        nome: 'Centro de Controle de Zoonoses',
-        tipo: 'CCZ',
-        responsavel: 'Carlos Jose',
-        local: 'Caucaia - CE',
-        telefone: '(85) 97777-7777',
-        status_validacao: false,
-      },
+      { nome: 'ONG Patinhas Felizes', tipo: 'ONG', responsavel: 'Ana Maria', local: 'Fortaleza - CE', telefone: '(85) 98888-8888', status_validacao: true },
+      { nome: 'Centro de Controle de Zoonoses', tipo: 'CCZ', responsavel: 'Carlos Jose', local: 'Caucaia - CE', telefone: '(85) 97777-7777', status_validacao: false },
     ],
   });
-
-  console.log('✅ Banco de dados povoado!');
+  console.log('Banco de dados povoado!');
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .catch((e) => { console.error(e); process.exit(1); })
+  .finally(async () => { await prisma.$disconnect(); });

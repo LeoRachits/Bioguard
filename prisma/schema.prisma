@@ -11,7 +11,7 @@ model User {
   nome         String
   email        String       @unique
   senha        String
-  tipo_usuario String       // 'ADMIN', 'COLABORADOR', 'INSTITUICAO'
+  tipo_usuario String
   occurrences  Occurrence[]
   createdAt    DateTime     @default(now())
 }
@@ -19,30 +19,27 @@ model User {
 model Institution {
   id               Int          @id @default(autoincrement())
   nome             String
-  tipo             String       // 'ONG', 'CCZ', 'ABRIGO'
-  responsavel      String?      
+  tipo             String
+  responsavel      String?
   local            String
-  telefone         String       
+  telefone         String
   status_validacao Boolean      @default(false)
   occurrences      Occurrence[]
 }
 
 model Occurrence {
   id              Int          @id @default(autoincrement())
-  animal          String       
+  animal          String
   porte           String
-  localizacao     String       
+  localizacao     String
   estado_aparente String
   foto_url        String?
   latitude        Float?
   longitude       Float?
-  status          String       @default("pendente") 
-  
-  userId         Int
-  user           User         @relation(fields: [userId], references: [id])
-  
-  institutionId  Int?
-  institution    Institution? @relation(fields: [institutionId], references: [id])
-  
-  createdAt      DateTime     @default(now())
+  status          String       @default("pendente")
+  userId          Int
+  user            User         @relation(fields: [userId], references: [id])
+  institutionId   Int?
+  institution     Institution? @relation(fields: [institutionId], references: [id])
+  createdAt       DateTime     @default(now())
 }
