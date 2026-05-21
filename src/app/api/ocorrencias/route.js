@@ -16,6 +16,7 @@ export async function POST(request) {
         estado_aparente: body.estado_aparente,
         latitude: body.latitude ? parseFloat(body.latitude) : null,
         longitude: body.longitude ? parseFloat(body.longitude) : null,
+        foto_url: body.foto_url || null,
         status: 'pendente',
         userId: 1,
       },

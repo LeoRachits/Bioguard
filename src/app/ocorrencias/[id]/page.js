@@ -41,14 +41,19 @@ export default function OcorrenciaDetalhes() {
           <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
             <div className="relative w-full h-96 bg-gray-100">
               <Image
-                src={dados.foto || "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80"}
+                src={dados.foto_url || dados.foto || (
+                     dados.animal?.toLowerCase().includes('gato') 
+                    ? "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80"
+                    : dados.animal?.toLowerCase().includes('silvestre')
+                       ? "https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=800&q=80"
+                       : "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80"
+)}
                 alt={dados.animal}
                 fill
                 className="object-cover"
                 priority
               />
             </div>
-            
             <div className="p-8">
               <div className="flex justify-between items-center mb-6">
                 <div>
