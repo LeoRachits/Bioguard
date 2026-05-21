@@ -1,168 +1,152 @@
-﻿# ðŸ¾ BioGuard â€” Sistema de GestÃ£o de Fauna e Resgate Animal
+﻿# BioGuard — Sistema de Gestão de Fauna e Resgate Animal
 
-**BioGuard** Ã© uma plataforma Full Stack desenvolvida para a **Cialne** (empresa de avicultura, Fortaleza/CE) com o objetivo de monitorar e gerenciar ocorrÃªncias de animais (fauna silvestre ou domÃ©sticos) encontrados nas unidades da empresa. O sistema conecta colaboradores de campo a instituiÃ§Ãµes de resgate (ONGs, CCZs e Abrigos) de forma Ã¡gil e rastreÃ¡vel.
+**BioGuard** é uma plataforma Full Stack desenvolvida para a **Cialne** (empresa de avicultura, Fortaleza/CE) com o objetivo de monitorar e gerenciar ocorrências de animais (fauna silvestre ou domésticos) encontrados nas unidades da empresa. O sistema conecta colaboradores de campo a instituições de resgate (ONGs, CCZs e Abrigos) de forma ágil e rastreável.
 
-> **Parceiro:** Cialne â€” Av. Presidente Costa e Silva, 2067, Fortaleza/CE  
-> **ResponsÃ¡vel:** Emanuel Carneiro | Gerente de TI | (85) 99147-6677  
-> **ODS:** ODS 11 â€” Cidades e Comunidades SustentÃ¡veis  
-> **VersÃ£o:** v1.0.4 â€” Em operaÃ§Ã£o local  
-
----
-
-## ðŸš€ Funcionalidades Principais
-
-- ðŸ” **AutenticaÃ§Ã£o Segura:** Login com cookie de sessÃ£o e proteÃ§Ã£o de rotas via Middleware
-- ðŸ“Š **Dashboard Inteligente:** Painel com estatÃ­sticas em tempo real e grÃ¡ficos de espÃ©cies (Recharts)
-- ðŸ“ **Registro de OcorrÃªncias:** FormulÃ¡rio com captura de GPS, foto e descriÃ§Ã£o do animal
-- ðŸ—ºï¸ **Mapa de OcorrÃªncias:** VisualizaÃ§Ã£o geogrÃ¡fica dos registros via Leaflet
-- ðŸ“‚ **DiretÃ³rio de InstituiÃ§Ãµes:** Busca de parceiros com contato direto via WhatsApp
-- ðŸ‘¤ **Perfil do GuardiÃ£o:** EstatÃ­sticas individuais de cada colaborador
-- ðŸ“± **Interface Responsiva:** Adaptada para uso em smartphones em campo
+> **Parceiro:** Cialne — Av. Presidente Costa e Silva, 2067, Fortaleza/CE
+> **Responsável:** Emanuel Carneiro | Gerente de TI | (85) 99147-6677
+> **ODS:** ODS 11 — Cidades e Comunidades Sustentáveis
+> **Deploy:** https://bioguard-kohl.vercel.app
 
 ---
 
-## ðŸ—ï¸ VisÃ£o Geral da Arquitetura
+## Funcionalidades Principais
 
-O BioGuard adota o padrÃ£o **MVC adaptado ao Next.js (App Router)**:
+- **Autenticação Segura:** Login com cookie de sessão e proteção de rotas via Middleware
+- **Dashboard Inteligente:** Painel com estatísticas em tempo real e gráficos de espécies (Recharts)
+- **Registro de Ocorrências:** Formulário com captura de GPS, foto (câmera ou galeria) e descrição do animal
+- **Mapa de Ocorrências:** Visualização geográfica dos registros via Leaflet
+- **Diretório de Instituições:** Busca de parceiros com contato direto via WhatsApp
+- **Perfil do Guardião:** Estatísticas individuais de cada colaborador
+- **Interface Responsiva:** Adaptada para uso em smartphones em campo
 
-```
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚              CLIENTES                        â”‚
-â”‚   Navegador Web / Smartphone (Mobile-First) â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-               â”‚ HTTP / Cookie de SessÃ£o
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚           NEXT.JS (App Router)               â”‚
-â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
-â”‚  â”‚  React Pages â”‚   â”‚   API Routes        â”‚ â”‚
-â”‚  â”‚  (View/UI)   â”‚   â”‚   (Controller)      â”‚ â”‚
-â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-                                  â”‚ Prisma ORM
-â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
-â”‚              PostgreSQL                       â”‚
-â”‚   Tabelas: User, Institution, Occurrence     â”‚
-â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
-```
+---
 
-**Camadas:**
+## Deploy em Produção
+
+| Item | Informação |
+|------|-----------|
+| **Sistema em produção** | https://bioguard-kohl.vercel.app |
+| **Login de teste** | admin@cialne.com.br / 123 |
+| **Repositório** | https://github.com/LeoRachits/Bioguard |
+
+---
+
+## Visão Geral da Arquitetura
+
+O BioGuard adota o padrão **MVC adaptado ao Next.js (App Router)**:
+
 - **View:** Componentes React com Tailwind CSS e Recharts
 - **Controller:** API Routes do Next.js (pasta `src/app/api/`)
 - **Model:** Prisma ORM com schema tipado (`prisma/schema.prisma`)
-- **Dados:** PostgreSQL hospedado localmente
+- **Banco:** PostgreSQL hospedado no Neon (cloud)
 
-> Ver diagrama completo em [`docs/architecture/architecture.md`](docs/architecture/architecture.md)
+> Ver diagrama completo em [docs/architecture/architecture.md](docs/architecture/architecture.md)
 
 ---
 
-## ðŸ”§ Como Executar o Projeto
+## Como Executar o Projeto
 
-### PrÃ©-requisitos
+### Pré-requisitos
+
 - Node.js 18+
-- PostgreSQL rodando localmente
+- Conta no Neon (https://neon.tech) — banco PostgreSQL cloud já configurado
 - npm ou yarn
 
-### InstalaÃ§Ã£o
+### Instalação
 
 ```bash
-# 1. Clonar o repositÃ³rio
+# 1. Clonar o repositório
 git clone https://github.com/LeoRachits/Bioguard.git
 
-# 2. Instalar dependÃªncias
+# 2. Instalar dependências
 npm install
 
-# 3. Configurar variÃ¡veis de ambiente
+# 3. Configurar variáveis de ambiente
 cp .env.example .env
-# Edite o .env com sua DATABASE_URL
+# Edite o .env com sua DATABASE_URL do Neon
 
-# 4. Executar migrations e seed
-npx prisma migrate deploy
-npx prisma db seed
+# 4. Gerar Prisma Client e executar seed
+npx prisma generate
+npx tsx prisma/seed.ts
 
 # 5. Iniciar o servidor de desenvolvimento
 npm run dev
 ```
 
-Acesse: [http://localhost:3000](http://localhost:3000)  
-Login padrÃ£o: `admin@cialne.com.br` / `123`
+Acesse: http://localhost:3000
+Login padrão: `admin@cialne.com.br` / `123`
 
 ---
 
-## ðŸ“š DocumentaÃ§Ã£o TÃ©cnica Completa
+## Documentação Técnica
 
 | Documento | Caminho |
 |-----------|---------|
-| Requisitos Funcionais e NÃ£o-Funcionais | [`docs/requirements/requirements.md`](docs/requirements/requirements.md) |
-| Arquitetura e DecisÃµes TÃ©cnicas | [`docs/architecture/architecture.md`](docs/architecture/architecture.md) |
-| Modelo de Banco de Dados | [`docs/database/database_model.md`](docs/database/database_model.md) |
-| EspecificaÃ§Ã£o das APIs | [`docs/api/api_documentation.md`](docs/api/api_documentation.md) |
+| Requisitos Funcionais e Não-Funcionais | [docs/requirements/requirements.md](docs/requirements/requirements.md) |
+| Arquitetura e Decisões Técnicas | [docs/architecture/architecture.md](docs/architecture/architecture.md) |
+| Modelo de Banco de Dados | [docs/database/database_model.md](docs/database/database_model.md) |
+| Especificação das APIs | [docs/api/api_documentation.md](docs/api/api_documentation.md) |
 
 ---
 
-## ðŸ› ï¸ Tecnologias e Ferramentas
+## Tecnologias e Ferramentas
 
-| Camada | Tecnologia | VersÃ£o |
+| Camada | Tecnologia | Versão |
 |--------|-----------|--------|
 | Framework Full Stack | Next.js (App Router) | 16.2.1 |
 | Linguagem | JavaScript / TypeScript | ES6+ |
-| EstilizaÃ§Ã£o | Tailwind CSS | 4.x |
-| GrÃ¡ficos | Recharts | 3.8.x |
+| Estilização | Tailwind CSS | 4.x |
+| Gráficos | Recharts | 3.8.x |
 | Mapa | Leaflet + React-Leaflet | 1.9.x |
-| Ãcones | Lucide React | 1.0.x |
 | ORM | Prisma | 7.5.x |
-| Banco de Dados | PostgreSQL | 15+ |
-| Runtime | Node.js | 18+ |
-| Versionamento | Git + GitHub | â€” |
+| Banco de Dados | PostgreSQL (Neon cloud) | 15+ |
+| Testes | Jest | — |
+| Deploy | Vercel | — |
+| Versionamento | Git + GitHub | — |
 
 ---
 
-## ðŸ“… Cronograma â€” Etapa 2 (N708)
+## Relação com o ODS 11
 
-A Etapa 2 contempla o desenvolvimento completo e a integraÃ§Ã£o de todas as funcionalidades planejadas. Prazo total: **14 semanas**.
+O BioGuard contribui diretamente com o **ODS 11 — Cidades e Comunidades Sustentáveis** da Agenda 2030 da ONU:
 
-| Fase | Semanas | Atividades | EntregÃ¡vel |
-|------|---------|------------|------------|
-| Fase 1 | Sem. 1â€“2 | RefatoraÃ§Ã£o do ambiente, Docker, autenticaÃ§Ã£o JWT real por perfil | Ambiente dockerizado, auth completa |
-| Fase 2 | Sem. 2â€“3 | ImplementaÃ§Ã£o dos perfis de acesso (Colaborador, Gestor, ONG, Admin) com middleware | Controle de acesso por perfil funcional |
-| Fase 3 | Sem. 3â€“5 | API completa de ocorrÃªncias com upload de foto e validaÃ§Ãµes | Endpoints /ocorrencias completos com testes |
-| Fase 4 | Sem. 5â€“6 | App Mobile (React Native) para registro em campo com GPS e cÃ¢mera | App mobile funcional |
-| Fase 5 | Sem. 6â€“8 | Acionamento automÃ¡tico de ONGs, notificaÃ§Ãµes push (FCM) | Sistema de notificaÃ§Ãµes funcional |
-| Fase 6 | Sem. 8â€“9 | Chat em tempo real (WebSocket) entre colaborador e ONG | Chat funcional dentro da ocorrÃªncia |
-| Fase 7 | Sem. 9â€“11 | PainÃ©is Web completos: Gestor, Admin Master, ONG | Interfaces integradas Ã  API |
-| Fase 8 | Sem. 11â€“12 | ExportaÃ§Ã£o de relatÃ³rios PDF/CSV com filtros | RelatÃ³rios mensais exportÃ¡veis |
-| Fase 9 | Sem. 12â€“13 | Testes unitÃ¡rios (Jest), integraÃ§Ã£o (Supertest) e E2E (Cypress) | Cobertura de testes > 70% |
-| Fase 10 | Sem. 13â€“14 | Deploy em produÃ§Ã£o, CI/CD, ajustes com a Cialne e documentaÃ§Ã£o final | Sistema em produÃ§Ã£o entregue Ã  Cialne |
+- **Meta 11.6:** Animais encontrados em ambiente industrial são encaminhados corretamente, sem soltura irregular
+- **Meta 11.b:** O sistema cria um protocolo rastreável entre empresa, ONGs e órgãos públicos (CCZ)
 
 ---
 
-## ðŸŒ RelaÃ§Ã£o com o ODS 11
+## Evidências da Prática Extensionista
 
-O BioGuard contribui diretamente com o **ODS 11 â€” Cidades e Comunidades SustentÃ¡veis** da Agenda 2030 da ONU:
+**Reunião presencial com o parceiro:**
 
-- **Meta 11.6:** Reduzir o impacto ambiental negativo per capita das cidades â€” animais encontrados em ambiente industrial sÃ£o encaminhados corretamente, sem soltura irregular
-- **Meta 11.b:** Fomentar polÃ­ticas integradas de gestÃ£o de risco â€” o sistema cria um protocolo rastreÃ¡vel entre empresa, ONGs e Ã³rgÃ£os pÃºblicos (CCZ)
-- **Responsabilidade Social Corporativa:** RelatÃ³rios exportÃ¡veis permitem Ã  Cialne evidenciar suas aÃ§Ãµes ambientais Ã  diretoria e a Ã³rgÃ£os reguladores
+- **Data:** 15 de março de 2026
+- **Local:** Cialne — Av. Presidente Costa e Silva, 2067, Fortaleza/CE
+- **Participantes:** Sidney de Jesus F. de Freitas, Leandro G. Nascimento (UNIFOR) + Emanuel Carneiro, Gerente de TI (Cialne)
+- **Resultado:** Necessidades mapeadas, escopo validado, parceria firmada
 
----
+![Reunião com Emanuel Carneiro na Cialne](validation/evidence/reuniao_cialne_15032026.jpg)
 
-## ðŸ¤ EvidÃªncias da PrÃ¡tica Extensionista
-
-**ReuniÃ£o presencial com o parceiro:**
-- **Data:** 15 de marÃ§o de 2026
-- **Local:** Cialne â€” Av. Presidente Costa e Silva, 2067, Fortaleza/CE
-- **Participantes:** Sidney de Jesus F. de Freitas, Leandro G. Nascimento (equipe UNIFOR) + Emanuel Carneiro, Gerente de TI (Cialne)
-- **Pauta:** Levantamento de requisitos, identificaÃ§Ã£o do problema de animais errantes nas dependÃªncias e validaÃ§Ã£o da proposta do BioGuard
-- **Resultado:** Necessidades mapeadas, escopo validado, termo de parceria firmado
-
-![ReuniÃ£o com Emanuel Carneiro na Cialne](validation/evidence/reuniao_cialne_15032026.jpg)
+> Documentação completa em [validation/](validation/)
 
 ---
 
-## ðŸ‘¥ Autores
+## Testes Automatizados
 
+15 testes Jest em `backend/tests/`:
 
-| Leandro GonÃ§alves Nascimento | 2326350 | Back-end, integraÃ§Ã£o com banco de dados, Prisma ORM, API Routes |
-| Sidney de Jesus Felix de Freitas | 2323783 | Front-end, componentes React, design de interface, API de stats |
+- `ocorrencias.test.js` — validação de status e campos (9 testes)
+- `instituicoes.test.js` — validação de instituições por tipo (6 testes)
 
+```bash
+cd backend
+npm test
+```
 
+---
 
+## Autores
+
+| Nome | Matrícula | Responsabilidades |
+|------|-----------|-------------------|
+| Leandro Gonçalves Nascimento | 2326350 | Back-end, Prisma ORM, API Routes, Deploy |
+| Sidney de Jesus Felix de Freitas | 2323783 | Front-end, componentes React, design, API de stats |
